@@ -1,0 +1,157 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "backend-web-eyemiru API Documentation",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4010/api/v1",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "images": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "quantities": {
+                        "type": "number",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "originPrice": {
+                        "type": "number",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "paymentCash": {
+                        "type": "number",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "information": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "refId": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    },
+                    "refProductType": {
+                        "type": "string",
+                        "optional": false,
+                        "empty": false,
+                        "trim": true
+                    }
+                },
+                "example": [
+                    {
+                        "name": "example",
+                        "thumbnail": [],
+                        "images": [],
+                        "quantities": 20,
+                        "originPrice": 200,
+                        "paymentCash": 200,
+                        "description": "mo ta",
+                        "information": "thong tin",
+                        "refId": "prdc3619ci6qje9v6ubj8fg",
+                        "refProductType": "ptyc3619ci6qje9v6ubj8b0"
+                    }
+                ]
+            }
+        },
+        "securitySchemes": {
+            "version": {
+                "type": "apiKey",
+                "name": "version",
+                "in": "header",
+                "description": "Requests should pass an version header"
+            }
+        }
+    },
+    "paths": {
+        "/product/list-product": {
+            "get": {
+                "description": "Create a new product",
+                "tags": [
+                    "product"
+                ],
+                "operationId": "v1.product.listProduct",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "description": "an version header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "version",
+                        "type": "string",
+                        "example": "webmediaone"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "list product",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "version": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "product",
+            "description": "product operations"
+        },
+        {
+            "name": "product",
+            "description": "List Product"
+        }
+    ],
+    "externalDocs": []
+}

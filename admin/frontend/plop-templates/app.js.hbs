@@ -1,0 +1,38 @@
+import dva from 'dva';
+import createLoading from 'dva-loading';
+
+// import App from './App';
+import * as serviceWorker from './serviceWorker';
+import './index.less';
+
+// model
+import modelGlobal from './models/global';
+import modelMenu from './models/menu';
+import modelSetting from './models/setting';
+import modelAuth from './models/auth';
+import modelUser from './models/user';
+/* PLOP_INJECT_IMPORT */
+
+const app = dva({
+  history: require('history').createHashHistory()
+});
+
+app.use(createLoading('loading'));
+
+app.model(modelGlobal);
+app.model(modelMenu);
+app.model(modelSetting);
+app.model(modelAuth);
+app.model(modelUser);
+/* PLOP_INJECT_EXPORT */
+
+app.router(require('./App').default);
+
+app.start('#root');
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+export default app;

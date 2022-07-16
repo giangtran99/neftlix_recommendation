@@ -1,0 +1,229 @@
+import React, { useEffect, useState } from 'react';
+import {
+  Card,
+  Button,
+  Form,
+  Col,
+  Row,
+  Popover,
+} from 'antd';
+import _ from 'lodash';
+import { routerRedux } from 'dva/router';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { connect } from 'dva';
+import { FormInputRender, useIntl } from '@bmstravel/pro-table';
+import FooterToolbar from '../../../components/FooterToolbar';
+import PageHeaderWrapper from '../../../components/PageHeaderWrapper';
+import Upload from '../../../components/Upload';
+import * as enums from '../../../utils/enums';
+import { formatNumber, camelCaseToDash } from '../../../utils/utils';
+import styles from './style.less';
+
+const RESOURCE = "{{camelCase pageName}}";
+const fieldLabels = {{{JSONstringify fieldLabels}}};
+const {{pascalCase pageName}}Form = ({ {{camelCase pageName}}: { formTitle, formData }, dispatch, submitting, match: { params } }) => {
+  const intl = useIntl();
+  const [form] = Form.useForm();
+  const [error, setError] = useState([]);
+  const [width, setWidth] = useState('100%')
+  const getErrorInfo = (errors) => {
+    console.log('getErrorInfo -> errors', errors);
+    const errorCount = errors.filter((item) => item.errors.length > 0).length;
+    if (!errors || errorCount === 0) {
+      return null;
+    }
+    const scrollToField = (fieldKey) => {
+      const labelNode = document.querySelector(`label[for="${fieldKey}"]`);
+      if (labelNode) {
+        labelNode.scrollIntoView(true);
+      }
+    };
+    const errorList = errors.map((err) => {
+      if (!err || err.errors.length === 0) {
+        return null;
+      }
+      const key = err.name[0];
+      return (
+        <li key={key} className={styles.errorListItem} onClick={() => scrollToField(key)}>
+          <CloseCircleOutlined className={styles.errorIcon} />
+          <div className={styles.errorMessage}>{err.errors[0]}</div>
+          <div className={styles.errorField}>{fieldLabels[key]}</div>
+        </li>
+      );
+    });
+    return (
+      <span className={styles.errorIcon}>
+        <Popover
+          title="Thông tin lỗi"
+          content={errorList}
+          overlayClassName={styles.errorPopover}
+          trigger="click"
+          getPopupContainer={(trigger) => {
+            if (trigger && trigger.parentNode) {
+              return trigger.parentNode;
+            }
+            return trigger;
+          }}
+        >
+          <CloseCircleOutlined /> &nbsp;{errorCount || 0} lỗi
+        </Popover>
+      </span>
+    );
+  };
+
+  const onFinish = (values) => {
+    setError([]);
+    const data = _.cloneDeep(values);
+    dispatch({
+      type: '{{camelCase pageName}}/submit',
+      payload: data,
+			callback: () => {
+				dispatch(routerRedux.push({ pathname: `/base/${camelCaseToDash(RESOURCE)}` }));
+			}
+    });
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+    setError(errorInfo.errorFields);
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: '{{camelCase pageName}}/loadForm',
+      payload: {
+        type: params.id !== 'add' ? 'E' : 'A',
+        id: params.id !== 'add' ? params.id : null
+      },
+    });
+  },[])
+
+  useEffect(() => {
+    form.resetFields();
+    form.setFieldsValue({
+      ...formData
+    });
+  },[formData]);
+
+  useEffect(() => {
+    function resizeFooterToolbar() {
+      requestAnimationFrame(() => {
+        const sider = document.querySelectorAll('.ant-layout-sider')[0];
+        if (sider) {
+          const widthCur = `calc(100% - ${sider.style.width})`;
+          if (width !== widthCur) {
+            setWidth(width);
+          }
+        }
+      });
+    };
+    window.addEventListener('resize', resizeFooterToolbar, { passive: true });
+    return function cleanup() {
+      window.removeEventListener('resize', resizeFooterToolbar);
+    };
+  })
+
+  if(params.id === 'add' || (formData && formData.id !== '' && formData.id !== 'add')){
+    return (
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        hideRequiredMark
+        initialValues=\{{ ...formData }}
+      >
+        <PageHeaderWrapper
+          title="Tạo mới"
+          wrapperClassName={styles.advancedForm}
+        >
+        {{#each dataForm}}
+          <Card title="{{title}}" className={styles.card} bordered={false}>
+            {{#each rows}}
+            <Row gutter={16}>
+              {{#each cols}}
+                {{#if (eq title "1")}}
+                <Col xl={6} lg={6} md={12} sm={24}>
+                  <Form.Item
+                    label={fieldLabels['{{col.dataIndex}}']}
+                    name="{{col.dataIndex}}"
+                    {{#if col.rules}}
+                    rules={ {{{JSONstringify col.rules}}} }
+                    {{/if}}
+                  >
+                    {{#if (unlessEq col.valueType "avatar")}}
+                    <FormInputRender 
+                      item={ {{{JSONstringify col}}} } 
+                      intl={intl}
+                    />
+                    {{/if}}
+                    {{#if (eq col.valueType "avatar")}}
+                    <Upload />
+                    {{/if}}
+                  </Form.Item>
+                </Col>
+                {{/if}}
+                {{#if (eq title "2")}}
+                <Col xl=\{{ span: 6, offset: 2 }} lg=\{{ span: 8 }} md=\{{ span: 8 }} sm={24}>
+                  <Form.Item
+                    label={fieldLabels['{{col.dataIndex}}']}
+                    name="{{col.dataIndex}}"
+                    {{#if col.rules}}
+                    rules={ {{{JSONstringify col.rules}}} }
+                    {{/if}}
+                  >
+                    {{#if (unlessEq col.valueType "avatar")}}
+                    <FormInputRender 
+                      item={ {{{JSONstringify col}}} } 
+                      intl={intl}
+                    />
+                    {{/if}}
+                    {{#if (eq col.valueType "avatar")}}
+                    <Upload />
+                    {{/if}}
+                  </Form.Item>
+                </Col>
+                {{/if}}
+                {{#if (eq title "3")}}
+                <Col xl=\{{ span: 8, offset: 2 }} lg=\{{ span: 8 }} md=\{{ span: 8 }} sm={24}>
+                  <Form.Item
+                    label={fieldLabels['{{col.dataIndex}}']}
+                    name="{{col.dataIndex}}"
+                    {{#if col.rules}}
+                    rules={ {{{JSONstringify col.rules}}} }
+                    {{/if}}
+                  >
+                    {{#if (unlessEq col.valueType "avatar")}}
+                    <FormInputRender 
+                      item={ {{{JSONstringify col}}} } 
+                      intl={intl}
+                    />
+                    {{/if}}
+                    {{#if (eq col.valueType "avatar")}}
+                    <Upload />
+                    {{/if}}
+                  </Form.Item>
+                </Col>
+                {{/if}}
+              {{/each}}
+            </Row>
+            {{/each}}
+          </Card>
+        {{/each}}
+          <FooterToolbar style=\{{ width }}>
+            {getErrorInfo(error)}
+            <Button type="primary" onClick={() => form.submit()} loading={submitting}>
+              {params.id === 'add' ? "Thêm mới" : "Chỉnh sửa"}
+            </Button>
+          </FooterToolbar>
+        </PageHeaderWrapper>
+      </Form>
+    );
+  }
+  return <></>;
+}
+
+export default connect(({ {{camelCase pageName}}, loading }) => ({
+  submitting: loading.effects['{{camelCase pageName}}/submit'],
+  {{camelCase pageName}}
+}))({{pascalCase pageName}}Form);

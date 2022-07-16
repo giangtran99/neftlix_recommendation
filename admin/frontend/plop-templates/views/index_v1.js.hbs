@@ -1,0 +1,455 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'dva';
+import {
+  Input,
+  Button,
+  Dropdown,
+  Menu,
+  Divider,
+  Space
+} from 'antd';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
+import { routerRedux } from 'dva/router';
+import ProTable, { viVNIntl, IntlProvider } from '@bmstravel/pro-table';
+import PageHeaderWrapper from '../../../components/PageHeaderWrapper';
+import { formatNumber } from '../../../utils/utils';
+import * as enums from '../../../utils/enums';
+import styles from './TableList.less';
+
+const getValue = obj =>
+  Object.keys(obj)
+    .map(key => obj[key])
+    .join(',');
+
+class TableList extends PureComponent {
+  state = {
+    expandForm: false,
+    selectedRows: [],
+    formValues: {},
+    skip: 0,
+    limit: (process.env.REACT_APP_PAGESIZE && !Number.isNaN(process.env.REACT_APP_PAGESIZE)) ? Number(process.env.REACT_APP_PAGESIZE) : 10,
+    total: 0,
+    anchor: '',
+    current: 1,
+    prefix: 'range'
+  };
+
+  form = React.createRef();
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const { skip, limit, current } = this.state;
+    dispatch({
+      type: '{{camelCase pageName}}/fetch',
+      payload: {
+        current,
+        skip,
+        limit
+      }
+    });
+  }
+
+  handleStandardTableChange = (pagination, filtersArg, sorter) => {
+    console.log('TableList -> handleStandardTableChange -> pagination %o \n filtersArg %o \n sorter %o', pagination, filtersArg, sorter);
+    const { dispatch } = this.props;
+    const { formValues } = this.state;
+
+    const filters = Object.keys(filtersArg).reduce((obj, key) => {
+      const newObj = { ...obj };
+      if (filtersArg[key] !== null) newObj[key] = getValue(filtersArg[key]);
+      return newObj;
+    }, {});
+    let anchor = '';
+    if (pagination.current > 1) {
+      anchor = pagination.current < this.state.current ? pagination.listAnchor[pagination.current] : pagination.anchor;
+    }
+
+    if (filters) {
+      if (filters.category) {
+        let filCate = filters.category;
+        filters.categories = filCate;
+        delete filters.category;
+      }
+    }
+
+    const params = {
+      ...formValues,
+      ...filters,
+      current: Number(pagination.current),
+      skip: (Number(pagination.current) - 1) * Number(pagination.pageSize),
+      anchor,
+      limit: Number(pagination.pageSize),
+    };
+    if (sorter.field) {
+      params.sorter = { [sorter.field]: sorter.order === 'ascend' ? "ASC" : "DESC" };
+    }
+    // console.log('TableList -> handleStandardTableChange -> params', params);
+
+    this.setState({ current: pagination.current }, () => {
+      dispatch({
+        type: '{{camelCase pageName}}/fetch',
+        payload: params,
+      });
+    })
+  };
+
+  handleFormReset = () => {
+    const { dispatch } = this.props;
+    this.form.current.resetFields();
+    this.setState({
+      formValues: {},
+    });
+    dispatch({
+      type: '{{camelCase pageName}}/fetch',
+      payload: {
+        skip: 0,
+        limit: this.state.limit
+      },
+    });
+  };
+
+  handleMenuClick = e => {
+    const { dispatch } = this.props;
+    const { selectedRows } = this.state;
+
+    if (selectedRows.length === 0) return;
+    switch (e.key) {
+      case 'remove':
+        dispatch({
+          type: 'rule/remove',
+          payload: {
+            key: selectedRows.map(row => row.key),
+          },
+          callback: () => {
+            this.setState({
+              selectedRows: [],
+            });
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  handleSelectRows = rows => {
+    this.setState({
+      selectedRows: rows,
+    });
+  };
+
+  handleSearch = () => {
+    // e.preventDefault();
+
+    const { dispatch } = this.props;
+    // console.log('form ', this.form.current);
+    this.form.current.validateFields().then(fieldsValue => {
+      // console.log('TableList -> handleSearch -> fieldsValue', fieldsValue);
+      const values = {
+        current: 1,
+        skip: 0,
+        limit: this.state.limit,
+      };
+      Object.keys(fieldsValue).forEach(key => {
+        if (fieldsValue[key] !== null && fieldsValue[key] !== undefined) {
+          values[key] = fieldsValue[key]
+        }
+      })
+
+      if (fieldsValue.fromDate) {
+        const fromDate = fieldsValue.fromDate.set({ 'hour': 0, 'minute': 0, 'second': 0 }).valueOf()
+        values.start_at = [fromDate]
+      }
+      if (fieldsValue.toDate) {
+        const toDate = fieldsValue.toDate.set({ 'hour': 23, 'minute': 59, 'second': 59 }).valueOf()
+        values.end_at = toDate
+      }
+      delete values.fromDate;
+      delete values.toDate;
+
+      const quantity = values.quantity;
+      delete values.quantity;
+      if (fieldsValue.quantity) {
+        values.typeQuantity = quantity.typeQuantity;
+        if (quantity.typeQuantity !== 'range') {
+          values.quantity = Number(quantity.fromQuantity)
+        } else {
+          values.quantity = [Number(quantity.fromQuantity), Number(quantity.toQuantity)]
+        }
+      }
+
+      this.setState({
+        formValues: values,
+      });
+
+      dispatch({
+        type: '{{camelCase pageName}}/fetch',
+        payload: values,
+      });
+    }).catch(err => {
+      if (err) return;
+    });
+  };
+
+  handleSearchFilter = (selectedKeys, confirm, dataIndex) => {
+    console.log('TableList -> handleSearch -> selectedKeys, confirm, dataIndex', selectedKeys, confirm, dataIndex);
+    this.setState({
+      [`search_${dataIndex}`]: selectedKeys[0],
+      // searchedColumn: dataIndex,
+    }, () => {
+      confirm();
+    });
+  }
+
+  handleAdd = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: '{{camelCase pageName}}/loadForm',
+      callback: () => {
+        dispatch(routerRedux.push({ pathname: '/endow/{{camelCase pageName}}/add' }));
+      }
+    })
+  };
+
+  handleUpdate = fields => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: '{{camelCase pageName}}/loadForm',
+      payload: {
+        type: 'E',
+        id: fields.id
+      },
+      callback: () => {
+        dispatch(routerRedux.push({ pathname: `/endow/{{camelCase pageName}}/${fields.id}` }));
+      }
+    })
+  };
+
+  getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style=\{{ padding: 8 }}>
+        <Input
+          ref={node => {
+            this.searchInput = node;
+          }}
+          placeholder={`Tìm kiếm ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearchFilter(selectedKeys, confirm, dataIndex)}
+          /* onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onChange(e.target.value)
+            }
+          }} */
+          style=\{{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => this.handleSearchFilter(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style=\{{ width: 90 }}
+          >
+            Tìm
+          </Button>
+          <Button onClick={() => this.handleReset(clearFilters, confirm, dataIndex)} size="small" style=\{{ width: 90 }}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: filtered => <SearchOutlined style=\{{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select());
+      }
+    },
+    onFilter: (value, record) => record
+    /* onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    render: text =>
+      this.state.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle=\{{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[this.state.searchText]}
+          autoEscape
+          textToHighlight={text.toString()}
+        />
+      ) : (
+          text
+        ), */
+  });
+
+  handleReset = (clearFilters, confirm, dataIndex) => {
+    clearFilters();
+    this.setState({ [`search_${dataIndex}`]: '' }, () => {
+      confirm()
+    });
+  };
+
+  columns = [
+  {
+    title: 'STT',
+    dataIndex: '',
+    width: 60,
+    align: 'center',
+    fixed: 'left',
+    render: (val, record, index) => {
+      return index + 1;
+    },
+  },
+{{#each columns}}
+{
+  title: '{{title}}',
+  dataIndex: '{{dataIndex}}',
+  {{#if valueType}}
+    valueType: '{{valueType}}',
+  {{/if}}
+  {{#if key}}
+    key: '{{key}}',
+  {{/if}}
+  {{#if width}}
+    width: {{width}},
+  {{/if}}
+  {{#if ellipsis}}
+    ellipsis: {
+      showTitle: true
+    },
+  {{/if}}
+  {{#if fixed}}
+    fixed: '{{fixed}}',
+  {{/if}}
+  {{#if align}}
+    align: '{{align}}',
+  {{/if}}
+  {{#if sorter}}
+    sorter: {{sorter}},
+  {{/if}}
+  {{#if needTotal}}
+    needTotal: {{needTotal}},
+  {{/if}}
+  {{#if hideInSearch}}
+    hideInSearch: {{hideInSearch}},
+  {{/if}}
+  {{#if hideInTable}}
+    hideInTable: {{hideInTable}},
+  {{/if}}
+  {{#if filters}}
+    filters: {{filters}},
+    {{#if valueEnum}}
+    valueEnum: enums.{{valueEnum}},
+    {{/if}}
+  {{/if}}
+  {{#if render}}
+    {{!-- {{#if valueType=}}
+      render: (val,record,index) => `${formatNumber(val)}`,
+    {{/if}} --}}
+  {{/if}}
+  {{#if hasFilter}}
+    ...this.getColumnSearchProps('{{dataIndex}}'),
+  {{/if}}
+},
+{{/each}}
+  {
+    title: 'Thao tác',
+    width: 150,
+    fixed: 'right',
+    render: (text, record) => (
+      <Fragment>
+        <a onClick={() => this.handleUpdate(record)}>Sửa</a>
+        <Divider type="vertical" />
+        <a href="">Xóa</a>
+      </Fragment>
+    ),
+  },
+];
+
+  render() {
+    const {
+      {{camelCase pageName}}: { data },
+      loading,
+    } = this.props;
+    console.log('render -> data', data);
+    const pagination = {
+      ...(data && data.pagination),
+      simple: true,
+      itemRender: (current, type, originalElement) => {
+        if (type === 'prev') {
+          return <a>Trước&nbsp;&nbsp;</a>;
+        }
+        if (type === 'next') {
+          return <a>Sau</a>;
+        }
+        return originalElement;
+      },
+    }
+    return (
+      <PageHeaderWrapper>
+        <div className={styles.tableList}>
+          <IntlProvider value={viVNIntl}>
+            <ProTable
+              headerTitle="{{camelCase pageName}}"
+              actionRef={e => this.actionRef = e}
+              rowKey="id"
+              toolBarRender={(action, { selectedRows }) => [
+                <Button icon={<PlusOutlined />} type="primary" onClick={() => this.handleAdd()}>
+                  Thêm mới
+                </Button>,
+                selectedRows && selectedRows.length > 0 && (
+                  <Dropdown
+                    overlay={
+                      <Menu
+                        onClick={async (e) => {
+                          if (e.key === 'remove') {
+                            await this.handleRemove(selectedRows);
+                            action.reload();
+                          }
+                        }}
+                        selectedKeys={[]}
+                      >
+                        <Menu.Item key="remove">Xóa</Menu.Item>
+                        <Menu.Item key="approval">Duyệt</Menu.Item>
+                      </Menu>
+                    }
+                  >
+                    <Button>
+                      Thao tác <DownOutlined />
+                    </Button>
+                  </Dropdown>
+                ),
+              ]}
+              tableAlertRender={({ selectedRowKeys, selectedRows }) => (
+                <div>
+                  Đã chọn <a style=\{{ fontWeight: 600 }}>{selectedRowKeys.length}</a> bản ghi&nbsp;&nbsp;
+                  {/* <span>
+                    &nbsp;{selectedRows.reduce((pre, item) => pre + item.callNo, 0)} tổng
+                  </span> */}
+                </div>
+              )}
+              // request={(params) => queryRule(params)}
+              dataSource={data && data.list}
+              pagination={pagination}
+              columns={this.columns}
+              rowSelection=\{{}}
+              scroll=\{{ x: 1500, y: 300 }}
+              loading={loading}
+              dateFormatter="DD-MM-YYYY HH:MM"
+              onChange={this.handleStandardTableChange}
+              formRef={this.form}
+              onSubmit={this.handleSearch}
+              type="table"
+            />
+          </IntlProvider>
+        </div>
+      </PageHeaderWrapper>
+    );
+  }
+}
+
+export default connect(({ {{camelCase pageName}}, loading }) => ({
+  {{camelCase pageName}},
+  loading: loading.models.{{camelCase pageName}}
+}))(TableList);

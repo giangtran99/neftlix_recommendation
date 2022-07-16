@@ -1,0 +1,18 @@
+import React from 'react';
+
+const routes = [
+	{ path: '/', exact: true, name: 'Home' },
+	{ path: '/dashboard', name: 'Dashboard', component: React.lazy(() => import('./views/Dashboard')) },
+	{ path: '/content', name: 'Content', component: React.lazy(() => import('./views/Article/List')), exact: true },
+	{ path: '/media', name: 'Media', component: React.lazy(() => import('./views/Group/List')), exact: true },
+	// { path: '/base/group/:id', name: 'Group Crud', component: React.lazy(() => import('./views/Group/Crud')) },
+	/* PLOP_INJECT_LIST */
+	{ path: '/base/tab-schema', name: 'Templates', component: React.lazy(() => import('./views/Templates/List')), exact: true },
+	{ path: '/base/form-schema', name: 'FormSchema', component: React.lazy(() => import('./views/FormSchema/List')), exact: true },
+	/* PLOP_INJECT_CRUD */
+	{ path: '/base/tab-schema/:id', name: 'Templates Crud', component: React.lazy(() => import('./views/Templates/Crud')) },
+	{ path: '/base/form-schema/:id', name: 'FormSchema Crud', component: React.lazy(() => import('./views/FormSchema/Crud')) },
+];
+
+export default routes;
+

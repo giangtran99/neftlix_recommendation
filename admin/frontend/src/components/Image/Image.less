@@ -1,0 +1,141 @@
+@import '~antd/lib/style/themes/default.less';
+
+.pics {
+	display: inline-flex;
+	flex-wrap: wrap;
+
+	.picCard {
+		position: relative;
+		width: 104px;
+		height: 104px;
+		margin-right: 8px;
+		margin-bottom: 8px;
+		text-align: center;
+		vertical-align: top;
+		background-color: #fafafa;
+		border: 1px dashed #d9d9d9;
+		border-radius: 4px;
+		cursor: pointer;
+		-webkit-transition: border-color 0.3s;
+		transition: border-color 0.3s;
+		flex: 1 1 auto;
+
+		.picIcon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			text-align: center;
+
+			&>.icon {
+				width: 48;
+			}
+		}
+	}
+
+	.picCardInfo {
+		position: relative;
+		width: 104px;
+		height: 104px;
+		margin-right: 8px;
+		margin-bottom: 8px;
+		text-align: center;
+		vertical-align: top;
+		background-color: #fafafa;
+		border: 1px solid #d9d9d9;
+		border-radius: 4px;
+		cursor: pointer;
+		-webkit-transition: border-color 0.3s;
+		transition: border-color 0.3s;
+		flex: 1 1 auto;
+		padding: 6px;
+
+		&>.picInfo {
+			position: relative;
+			height: 100%;
+			overflow: hidden;
+
+			&::before {
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				background-color: fade(@black, 50%);
+				opacity: 0;
+				-webkit-transition: all 0.3s;
+				transition: all 0.3s;
+				content: ' ';
+			}
+
+			&>span {
+				// display: block;
+				width: 100%;
+				height: 100%;
+			}
+
+			.picThumbnail {
+				position: static;
+				// display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+
+				&>img {
+					position: static;
+					// display: block;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+		}
+
+		&>.picAction {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			z-index: 10;
+			white-space: nowrap;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			opacity: 0;
+			-webkit-transition: all .3s;
+			transition: all .3s;
+
+			.btnDelete {
+				width: 24px;
+				height: 24px;
+				padding: 0;
+				font-size: 14px;
+				border-radius: 2px;
+				line-height: 1;
+				background: none !important;
+				border: none;
+			}
+
+			.iconEye,
+			.iconDelete {
+				z-index: 10;
+				width: 16px;
+				margin: 0 4px;
+				color: @text-color-dark;
+				font-size: 16px;
+				cursor: pointer;
+				transition: all 0.3s;
+
+				&:hover {
+					color: @text-color-inverse;
+				}
+			}
+		}
+	}
+
+	.picCardInfo:hover .picInfo::before {
+		opacity: 1;
+	}
+
+	.picInfo:hover+.picAction,
+	.picAction:hover {
+		opacity: 1;
+	}
+}

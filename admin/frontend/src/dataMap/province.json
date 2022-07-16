@@ -1,0 +1,516 @@
+{
+"RECORDS":[
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"1",
+"name":"Hà Nội",
+"type":"Thành phố Trung ương",
+"sortIndex":"3"
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"2",
+"name":"Hà Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"4",
+"name":"Cao Bằng",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"6",
+"name":"Bắc Kạn",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"8",
+"name":"Tuyên Quang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"10",
+"name":"Lào Cai",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"11",
+"name":"Điện Biên",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"12",
+"name":"Lai Châu",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"14",
+"name":"Sơn La",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"15",
+"name":"Yên Bái",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"17",
+"name":"Hoà Bình",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"19",
+"name":"Thái Nguyên",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"20",
+"name":"Lạng Sơn",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"22",
+"name":"Quảng Ninh",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"24",
+"name":"Bắc Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"25",
+"name":"Phú Thọ",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"26",
+"name":"Vĩnh Phúc",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"27",
+"name":"Bắc Ninh",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"30",
+"name":"Hải Dương",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"31",
+"name":"Hải Phòng",
+"type":"Thành phố Trung ương",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"33",
+"name":"Hưng Yên",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"34",
+"name":"Thái Bình",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"35",
+"name":"Hà Nam",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"36",
+"name":"Nam Định",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"37",
+"name":"Ninh Bình",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"38",
+"name":"Thanh Hóa",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"40",
+"name":"Nghệ An",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"42",
+"name":"Hà Tĩnh",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"44",
+"name":"Quảng Bình",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"45",
+"name":"Quảng Trị",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"46",
+"name":"Thừa Thiên Huế",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"48",
+"name":"Đà Nẵng",
+"type":"Thành phố Trung ương",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"49",
+"name":"Quảng Nam",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"51",
+"name":"Quảng Ngãi",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"52",
+"name":"Bình Định",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"54",
+"name":"Phú Yên",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"56",
+"name":"Khánh Hòa",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"58",
+"name":"Ninh Thuận",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"60",
+"name":"Bình Thuận",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"62",
+"name":"Kon Tum",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"64",
+"name":"Gia Lai",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"66",
+"name":"Đắk Lắk",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"67",
+"name":"Đắk Nông",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"68",
+"name":"Lâm Đồng",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"70",
+"name":"Bình Phước",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"72",
+"name":"Tây Ninh",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"74",
+"name":"Bình Dương",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"75",
+"name":"Đồng Nai",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"77",
+"name":"Bà Rịa - Vũng Tàu",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"79",
+"name":"Hồ Chí Minh",
+"type":"Thành phố Trung ương",
+"sortIndex":"2"
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"80",
+"name":"Long An",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"82",
+"name":"Tiền Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"83",
+"name":"Bến Tre",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"84",
+"name":"Trà Vinh",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"86",
+"name":"Vĩnh Long",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"87",
+"name":"Đồng Tháp",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"89",
+"name":"An Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"91",
+"name":"Kiên Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"92",
+"name":"Cần Thơ",
+"type":"Thành phố Trung ương",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"93",
+"name":"Hậu Giang",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"94",
+"name":"Sóc Trăng",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"95",
+"name":"Bạc Liêu",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"96",
+"name":"Cà Mau",
+"type":"Tỉnh",
+"sortIndex":""
+},
+{
+"createdAt":"1551375876335",
+"updatedAt":"1551375876335",
+"id":"100",
+"name":"Toàn quốc",
+"type":"Tỉnh",
+"sortIndex":"1"
+}
+]
+}

@@ -1,0 +1,31 @@
+import { stringify } from 'qs';
+import request from '../utils/request';
+
+export async function getList(params, notification) {
+  return request(`/{{api}}?${stringify(params)}`, null, notification);
+}
+
+export async function find(params, notification) {
+	return request(`/{{api}}/find?${stringify(params)}`, null, notification);
+}
+
+export async function get(id, params = {}, notification) {
+  if(params !== null && Object.keys(params).length > 0){
+    return request(`/{{api}}/${id}?${stringify(params)}`, null, notification);
+  }
+  return request(`/{{api}}/${id}`, null, notification);
+}
+
+export async function create(body, notification) {
+  return request(`/{{api}}`, {
+    method: 'POST',
+    body,
+  }, notification);
+}
+
+export async function update(id, body, notification) {
+  return request(`/{{api}}/${id}`, {
+    method: 'PUT',
+    body,
+  }, notification);
+}
