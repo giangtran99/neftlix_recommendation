@@ -6,10 +6,10 @@
 + Movies Management 
 
 # Stack use 
-+ Backend
+**Backend**
 - Fast API Framework
 - MongoDB
-+ Frontend
+**Frontend**
 - Reactjs
-+ Algorithm for Movies Recommendation
+**Algorithm for Movies Recommendation**
 - Singular Value Decomposition
