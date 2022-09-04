@@ -10,7 +10,9 @@
 **Backend**
 - Fast API Framework
 - MongoDB
+
 **Frontend**
 - Reactjs
+
 **Algorithm for Movies Recommendation**
 - Singular Value Decomposition
