@@ -1,6 +1,15 @@
 
-# Netflix Clone
+# Netflix Recommendation System
 
 + Reccommendation System for Movies
-+ Data Visualization
-+ Management Movies
++ Movies Data Visualization
++ Movies Management 
+
+# Stack use 
++ Backend
+- Fast API Framework
+- MongoDB
++ Frontend
+- Reactjs
++ Algorithm for Movies Recommendation
+- Singular Value Decomposition
