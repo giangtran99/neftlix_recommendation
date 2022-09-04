@@ -5,7 +5,7 @@
 + Movies Data Visualization
 + Movies Management 
 
-# Stack use 
+# Stack 
 
 **Backend**
 - Fast API Framework
